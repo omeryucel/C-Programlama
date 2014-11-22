@@ -54,7 +54,7 @@ void main()
 		    Sleep(2000);
 		    system("CLS");
 		    continue; //Tekrar for döngüsüne dönülmesi sağlanmaktadır.
-        }
+            }
 
 	    else //Kullanıcı tarafından girilen şifre, sistemde kayıtlı olan kullanıcı şifresine eşit ise else komutu çalışır.
 	    {   
