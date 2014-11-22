@@ -5,14 +5,14 @@
 #include<Windows.h> /*Sleep() ve system("CLS") fonksiyonları için Windows kütüphanesi çağrılmaktadır.*/
 struct kisi /*struct yapıları tanımlanmaktadır.*/
 {
-char ad[BUFSIZ];
-char soyad[BUFSIZ];
-char evtel[BUFSIZ];
-char ceptel[BUFSIZ];
-char istel[BUFSIZ];
-char eposta[BUFSIZ];
-char adres[BUFSIZ];
-char dogumtarihi[BUFSIZ];
+	char ad[BUFSIZ];
+	char soyad[BUFSIZ];
+	char evtel[BUFSIZ];
+	char ceptel[BUFSIZ];
+	char istel[BUFSIZ];
+	char eposta[BUFSIZ];
+	char adres[BUFSIZ];
+	char dogumtarihi[BUFSIZ];
 }kisiler[BUFSIZ],yedek[BUFSIZ],silinecek[BUFSIZ];
 
 void kisiekle(); /*Telefon rehberi için gerekli fonksiyonlar tanımlanmaktadır.*/
