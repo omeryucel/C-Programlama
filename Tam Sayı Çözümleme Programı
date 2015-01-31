@@ -4,7 +4,6 @@
 void main()
 { 
 	int sayi,binlik,yuzluk,onluk,birlik;
-	printf(" =Tam Sayi Cozumleme Programi=\n\n");
 	for(;;)
 	{
 		printf(" Lutfen 4 Basamakli Bir Tam Sayi Giriniz:");
