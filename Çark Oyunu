@@ -27,7 +27,7 @@ int main()
 		secim=getche(); //Kullanıcıdan seçimi alınmaktadır. Kullanıcının bir karakter girmesiyle karakter ekranda gösterilmekte ve secim değişkenine atanmaktadır.
 		switch(secim) //Kullanıcının seçimine göre case yapısına girilmektedir.
 		{
-		    case 'c': //Kullanıcının c karakterini girmesiyle buradaki case yapısına girilmekte ve oyun başlamaktadır.
+		        case 'c': //Kullanıcının c karakterini girmesiyle buradaki case yapısına girilmekte ve oyun başlamaktadır.
 			{
 				printf("\n\n<Puaniniz:%d>\n\n",oyuncuPuani);
 				cark_cevir(); //cark_cevir() fonksiyonu çağrılmaktadır.
