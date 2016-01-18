@@ -129,7 +129,7 @@ void main()
 					printf("\n\n");
 					break;
 
-					case 4: //Para gönderme.
+				case 4: //Para gönderme.
 					while(1)
 					{	
 						system("CLS");
