@@ -1,0 +1,231 @@
+//Bu Program Çark Oyunu Programıdır.
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <conio.h>
+
+void cark_cevir(); //Fonksiyonların prototipleri tanımlanmaktadır.
+int tahmin_gir();
+int sayi_uret();
+
+enum cark {elliPuan,yuzPuan,ikiyuzelliPuan,pas,iflas,puanAzaltma}; //Çarkın dönmesi sonucu olabilecek olası durumlar (6 tane) tanımlanmaktadır.
+enum cark carkDurumu; //Çarkın dönmesi sonucu carkDurumu yukarıdaki 6 durum dışında başka bir durum değerine sahip olamaz.
+
+int main()
+{
+	int oyuncuPuani=250; //Oyuna başlama puanı tanımlanmaktadır.
+	int oyunSonu=0; //Oyuncunun iflas etmesi durumunda oyunun sonlandırılabilmesi için tanımlanmaktadır.
+	char secim;
+	do
+	{
+		printf("  ==Cark Oyunu==\n");
+		printf("-------------------\n");
+		printf("| Carki Cevir (c) |\n");
+		printf("| Oyundan Cik (s) |\n");
+		printf("-------------------\n");
+		printf("Seciminiz:");
+		secim=getche(); //Kullanıcıdan seçimi alınmaktadır. Kullanıcının bir karakter girmesiyle karakter ekranda gösterilmekte ve secim değişkenine atanmaktadır.
+		switch(secim) //Kullanıcının seçimine göre case yapısına girilmektedir.
+		{
+		    case 'c': //Kullanıcının c karakterini girmesiyle buradaki case yapısına girilmekte ve oyun başlamaktadır.
+			{
+				printf("\n\n<Puaniniz:%d>\n\n",oyuncuPuani);
+				cark_cevir(); //cark_cevir() fonksiyonu çağrılmaktadır.
+				if( carkDurumu==elliPuan ) //Çarkın 50Puan gelmesi sonucu if yapısına girilmektedir.
+				{
+					printf("Cark Durumu -> 50 Puan\n50 Puan Icin 1-10 Arasinda Bir Tane Sayi Tahmin Etmeniz Gerekmektedir.\n");
+					if( tahmin_gir()>=1 ) //Kullanıcıdan sayı tahminlerinin alınabilmesi için tahmin_gir() fonksiyonu çağrılmakta ve kullanıcının doğru tahmin sayısının 1'e eşit veya büyük olması durumunda if yapısına girilmektedir.
+					{
+						oyuncuPuani+=50; //Oyuncunun puanı 50 puan artmaktadır.
+						printf("\nTebrikler 50 Puan Kazandiniz!\n");
+						printf("<Puaniniz:%d>\n\n",oyuncuPuani);
+					}
+					else //Kullanıcı en az 1 tane sayı tahmin edemediyse else yapısına girilmektedir.
+					{
+						printf("\nMaalesef Sayiyi Tahmin Edemediniz. Puan Kazanamadiniz!\n");
+					    printf("<Puaniniz:%d>\n\n",oyuncuPuani);
+					}
+				}
+
+				else if( carkDurumu==yuzPuan ) //Çarkın 100Puan gelmesi sonucu if yapısına girilmektedir.
+				{
+					printf("Cark Durumu -> 100 Puan\n100 Puan Icin 1-10 Arasinda Iki Tane Sayi Tahmin Etmeniz Gerekmektedir.\n");
+					if( tahmin_gir()>=2 ) //Kullanıcıdan sayı tahminlerinin alınabilmesi için tahmin_gir() fonksiyonu çağrılmakta ve kullanıcının doğru tahmin sayısının 2'ye eşit veya büyük olması durumunda if yapısına girilmektedir.
+					{
+						oyuncuPuani+=100; //Oyuncunun puanı 100 puan artmaktadır.
+						printf("\nTebrikler 100 Puan Kazandiniz!\n");
+						printf("<Puaniniz:%d>\n\n",oyuncuPuani);
+					}
+					else //Kullanıcı en az 2 tane sayı tahmin edemediyse else yapısına girilmektedir.
+					{
+						printf("\nMaalesef Sayilari Tahmin Edemediniz. Puan Kazanamadiniz!\n");
+						printf("<Puaniniz:%d>\n\n",oyuncuPuani);
+					}
+				}
+
+				else if( carkDurumu==iflas ) //Çarkın İflas gelmesi sonucu if yapısına girilmektedir.
+				{
+					printf("Cark Durumu -> Iflas\n");
+					oyuncuPuani=0; //Oyuncunun puanı 0 olmaktadır.
+					printf("Iflas Ettiniz!\n");
+					printf("\n<Puaniniz:%d>\n",oyuncuPuani);
+					printf("\nOyun Sona Ermistir.\n");
+					oyunSonu=1; //oyuncuPuani'nin 0 olmasıyla birlikte oyun sonlanacağı için oyunSonu'na 1 değeri atanmaktadır. Bu işlem oyunun sonlandırılması için kullanılmaktadır.
+				}
+
+				else if( carkDurumu==ikiyuzelliPuan ) //Çarkın 250Puan gelmesi sonucu if yapısına girilmektedir.
+				{
+					printf("Cark Durumu -> 250 Puan\n250 Puan Icin 1-10 Arasinda Uc Tane Sayi Tahmin Etmeniz Gerekmektedir.\n");
+					if(tahmin_gir()>=3) //Kullanıcıdan sayı tahminlerinin alınabilmesi için tahmin_gir() fonksiyonu çağrılmakta ve kullanıcının doğru tahmin sayısının 3'e eşit veya büyük olması durumunda if yapısına girilmektedir.
+					{
+						printf("\nTebrikler 250 Puan Kazandiniz!\n");
+						oyuncuPuani+=250; //Oyuncunun puanı 250 puan artmaktadır.
+						printf("<Puaniniz:%d>\n\n",oyuncuPuani);
+					}
+					else //Kullanıcı en az 3 tane sayı tahmin edemediyse else yapısına girilmektedir.
+					{
+						printf("\nMaalesef Sayilari Tahmin Edemediniz. Puan Kazanamadiniz!\n");
+						printf("<Puaniniz:%d>\n\n",oyuncuPuani);
+					}
+				}
+
+				else if( carkDurumu==puanAzaltma ) //Çarkın PuanAzaltma gelmesi sonucu if yapısına girilmektedir.
+				{
+					printf("Cark Durumu -> Puan Azaltma\nPuaniniz %%25 Azalacaktir.\n");
+					oyuncuPuani-=(oyuncuPuani*0.25); //Oyuncunun puanı %25 azaltılmaktadır.
+					printf("\n<Puaniniz:%d>\n\n",oyuncuPuani);
+					if(oyuncuPuani==0) //Kullanıcının puanı 0 olması durumunda if yapısına girilmektedir.
+						printf("Oyun Sona Ermistir.\n");
+				}
+
+				else //Çarkın Pas gelmesi sonucu else yapısına girilmektedir. (carkDurumu==pas)
+				{
+					printf("Cark Durumu -> Pas\nCarki Tekrar Ceviriniz.\n");
+					printf("\n<Puaniniz:%d>\n\n",oyuncuPuani);
+				}
+				break;
+			}
+			case 's':  //Kullanıcının s karakterini girmesiyle buradaki case yapısına girilmekte ve oyunun sonlandırılacağına yönelik mesaj ekrana yazdırılmaktadır.
+			{
+				printf("\n\nCark Oyunundan Cikmaktasiniz...");
+				printf("\nGule Gule!\n");
+				break;
+			}
+			default: //Kullanıcının c ve s dışında bir karakter girmesiyle default yapısına girilmektedir.
+			{
+				printf("\n\nBoyle Bir Islem Seceneginiz Bulunmamaktadir. Yeniden Secim Yapiniz.\n\n");
+				break;
+			}
+		}
+	}
+	while(secim!='s' && oyunSonu==0 && oyuncuPuani>0); //Kullanıcı klavyeden 's' karakterini girmediği, iflas etmediği (oyunSonu==0 olduğu sürece) ve oyuncuPuani>0 olduğu müddetçe döngü (oyun) devam etmektedir.
+	return 0;
+}
+
+void cark_cevir() //Çarkın çevrildiği fonksiyon.
+{
+	srand(time(NULL));
+	switch(rand() %6 + 1) //Çarkın gelebileceği 6 farklı olası durum olduğu için 1-6 arasında rastgele bir sayi üretilmektedir. Üretilen sayıya göre ilgili case yapısı çalışmaktadır.
+	{
+		case 1:
+			carkDurumu=elliPuan; //Çarkın dönme sonucu durduğu yer "elliPuan (50Puan)" olmaktadır.
+			break;
+		case 2:
+			carkDurumu=pas; //Çarkın dönme sonucu durduğu yer "pas" olmaktadır.
+			break;
+		case 3:
+			carkDurumu=yuzPuan; //Çarkın dönme sonucu durduğu yer "yuzPuan (100Puan)" olmaktadır.
+			break;
+		case 4:
+			carkDurumu=iflas; //Çarkın dönme sonucu durduğu yer "iflas" olmaktadır.
+			break;
+		case 5:
+			carkDurumu=ikiyuzelliPuan; //Çarkın dönme sonucu durduğu yer "ikiyuzelliPuan (250Puan)" olmaktadır.
+			break;
+		case 6:
+			carkDurumu=puanAzaltma; //Çarkın dönme sonucu durduğu yer "puanAzaltma" olmaktadır.
+			break;
+	}
+}
+
+int tahmin_gir() //Kullanıcından tahminlerinin alındığı ve tahminlerin üretilen sayılarla karşılaştırıldığı fonksiyon.
+{
+	int uretilenSayi1,uretilenSayi2,uretilenSayi3,uretilenSayi4;
+	int tahmin1,tahmin2,tahmin3,tahmin4;
+	int dogruTahminSayisi=0;
+
+	while(1) //while sonsuz döngüsüyle bilgisayar tarafından üretilen sayıların birbirinden farklı olması sağlanmaktadır.
+	{
+		uretilenSayi1=sayi_uret(); //sayi_uret() fonksiyonunda üretilen sayı, uretilenSayi1 değişkenine atanmaktadır.
+		uretilenSayi2=sayi_uret();
+		uretilenSayi3=sayi_uret();
+		uretilenSayi4=sayi_uret();
+
+		if(uretilenSayi1!=uretilenSayi2 && uretilenSayi1!=uretilenSayi3 && uretilenSayi1!=uretilenSayi4 && uretilenSayi2!=uretilenSayi3 && uretilenSayi2!=uretilenSayi4 && uretilenSayi3!=uretilenSayi4)
+			break; //Üretilen sayıların birbirinden farklı olması durumunda sonsuz döngü sonlandırılmaktadır.
+	}
+
+	do //Kullanıcının 1 ile 10 arasında bir sayı girmesi sağlanmaktadır.
+	{
+		printf("\n1.Sayi Tahmininizi Giriniz:");
+		scanf("%d",&tahmin1); //Kullanıcının girmiş olduğu sayı (tahmin ettiği sayı), tahmin1 değişkenine atanmaktadır.
+		if(tahmin1<1 || tahmin1>10)
+			printf("\nGirdiginiz Sayi 1-10 Arasinda Degildir. Yeniden Sayi Giriniz!");
+	}
+	while(tahmin1<1 || tahmin1>10); //Kullanıcının 1 ile 10 arasında bir sayı girmesiyle döngügen çıkılmaktadır.
+
+	do
+	{
+		printf("2.Sayi Tahmininizi Giriniz:");
+		scanf("%d",&tahmin2);
+		if(tahmin2<1 || tahmin2>10)
+			printf("\nGirdiginiz Sayi 1-10 Arasinda Degildir. Yeniden Sayi Giriniz!\n");
+	}
+	while(tahmin2<1 || tahmin2>10);
+
+	do
+	{
+		printf("3.Sayi Tahmininizi Giriniz:");
+		scanf("%d",&tahmin3);
+		if(tahmin3<1 || tahmin3>10)
+			printf("\nGirdiginiz Sayi 1-10 Arasinda Degildir. Yeniden Sayi Giriniz!\n");
+	}
+	while(tahmin3<1 || tahmin3>10);
+
+	do
+	{
+		printf("4.Sayi Tahmininizi Giriniz:");
+		scanf("%d",&tahmin4);
+		if(tahmin4<1 || tahmin4>10)
+			printf("\nGirdiginiz Sayi 1-10 Arasinda Degildir. Yeniden Sayi Giriniz!\n");
+	}
+	while(tahmin4<1 || tahmin4>10);
+
+	if( tahmin1==uretilenSayi1 || tahmin1==uretilenSayi2 || tahmin1==uretilenSayi3 || tahmin1==uretilenSayi4 ) //tahmin1 değeri üretilen sayılarla karşılaştırılmakta ve birine eşit olması halinde if yapısına girilmektedir.
+		++dogruTahminSayisi; //Doğru tahmin sayısı (toplamda bilinen doğru tahmin sayısı) 1 arttırılmaktadır.
+	if( tahmin2==uretilenSayi1 || tahmin2==uretilenSayi2 || tahmin2==uretilenSayi3 || tahmin2==uretilenSayi4 )
+	{	//Bilgisayar 5 sayısını üretmiş olsun.Kullanıcının 2 tane 5 girmesi halinde bu 5 sayısı yukarıdaki ilk if koşulunu sağlayacak ve dogruTahminSayisi 1 arttırılacaktı.
+		//Aynı şekilde bir dıştaki if bloğu koşulunu da sağlayacak ve dogruTahminSayisi yine 1 arttırılacaktı. Bu durum böyle devam edecekti.
+		if(tahmin2!=tahmin1) //Bu durumu önlemek amacıyla buradaki if koşulundan itibaren girilen sayıların birbirine eşit olup olmadığı kontrol edilmektedir.
+			++dogruTahminSayisi; //Böylece kullanıcının girmiş olduğu iki tane aynı sayıyla, 2 tane doğru tahmin sayısına veya girmiş olduğu üç tane aynı sayıyla, 3 tane doğru tahmin sayısına ulaşması engellenmiş olmuştur.
+	}
+	if( tahmin3==uretilenSayi1 || tahmin3==uretilenSayi2 || tahmin3==uretilenSayi3 || tahmin3==uretilenSayi4 )
+	{
+		if(tahmin3!=tahmin1 && tahmin3!=tahmin2)
+			++dogruTahminSayisi;
+	}
+	if( tahmin4==uretilenSayi1 || tahmin4==uretilenSayi2 || tahmin4==uretilenSayi3 || tahmin4==uretilenSayi4 )
+	{
+		if(tahmin4!=tahmin1 && tahmin4!=tahmin2 && tahmin4!=tahmin3)
+			++dogruTahminSayisi;
+	}
+
+	return dogruTahminSayisi; //dogruTahminSayisi main() fonksiyonuna döndürülmektedir.
+}
+
+int sayi_uret() //Kullanıcının tahmin etmesi için rastgele sayının üretildiği fonksiyon.
+{
+	return rand() %10 + 1; //1 ile 10 arasında rastgele bir sayı üretilmekte ve bu sayı tahmin_gir() fonksiyonuna döndürülmektedir.
+	//Açıklama: srand(time(NULL)) fonksiyonu kullanılmamıştır.
+	//			Kullanılması durumunda, bu fonksiyon tahmin_gir() fonksiyonu tarafından her çağrıldığında aynı sayıları üretecekti.
+}
